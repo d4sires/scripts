@@ -17,7 +17,7 @@ autocanswap()
 
 doAutoCanswap()
 {
-    self endon("disconnect");
+    	self endon("disconnect");
 	self endon("stop_cswap");
 	for(;;)
 	{
