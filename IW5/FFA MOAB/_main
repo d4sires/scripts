@@ -1,1 +1,27 @@
+#include maps\mp\_utility;
+#include common_scripts\utility;
+#include maps\mp\gametypes\_hud_util;
+#include maps\mp\gametypes\_hud_message;
 
+init()
+{
+    level thread moabLogic();
+}
+
+moabLogic()
+{
+    level waittill("prematch_done");
+    wait 588;
+    level thread doMOAB();
+}
+
+doMOAB()
+{
+    foreach(player in level.players)
+    {
+        if(isAlive(player))
+        {
+            player thread scripts\mp\_hooks::donuke_stub();
+        }
+    }
+}
