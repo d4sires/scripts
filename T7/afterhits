@@ -1,3 +1,4 @@
+//thank you lurkzy for the help w/ this!
 function afterHit(weapon)
 {
     if(!self.afterhit)
