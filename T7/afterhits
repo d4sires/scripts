@@ -1,0 +1,28 @@
+function afterHit(weapon)
+{
+    if(!self.afterhit)
+    {
+        self iprintln("Afterhit ^5Set");
+        self thread doAfterHit(weapon);
+        self.afterhit = 1;
+    }
+    else if(self.afterhit)
+    {
+        self iprintln("Afterhit ^1Unset");
+        self.afterhit = 0;
+        self notify("stop_afterhit");
+    }
+}
+
+function doAfterHit(weapon)
+{    
+    weapon = getWeapon(weapon);
+    self endon("stop_afterhit");
+    for(;;)
+    {
+        level waittill("game_ended");
+        self takeallweapons();
+        self giveWeapon(weapon);
+        self switchtoWeapon(weapon);
+    }
+}
