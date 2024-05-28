@@ -1,0 +1,51 @@
+#include maps\mp\_utility;
+#include common_scripts\utility;
+#include maps\mp\gametypes\_hud_util;
+
+init()
+{
+    replacefunc(maps\mp\killstreaks\_nuke::doNuke,::doNuke_stub); //moab
+}
+
+doNuke_stub(var_0)
+{
+    level endon( "nuke_cancelled" );
+    level.nukeinfo.player = self;
+    level.nukeinfo.team = self.pers["team"];
+    level.nukeincoming = 1;
+    setdvar( "ui_bomb_timer", 4 );
+
+    if ( level.teambased )
+        thread maps\mp\_utility::teamplayercardsplash( "used_nuke", self, self.team );
+
+    level thread maps\mp\killstreaks\_nuke::delaythread_nuke( level.nuketimer - 3.3, maps\mp\killstreaks\_nuke::nukesoundincoming );
+    level thread maps\mp\killstreaks\_nuke::delaythread_nuke( level.nuketimer, maps\mp\killstreaks\_nuke::nukesoundexplosion );
+    level thread maps\mp\killstreaks\_nuke::delaythread_nuke( level.nuketimer, maps\mp\killstreaks\_nuke::nukeslowmo );
+    level thread maps\mp\killstreaks\_nuke::delaythread_nuke( level.nuketimer, maps\mp\killstreaks\_nuke::nukeeffects );
+    level thread maps\mp\killstreaks\_nuke::delaythread_nuke( level.nuketimer + 0.25, maps\mp\killstreaks\_nuke::nukevision );
+    level thread maps\mp\killstreaks\_nuke::delaythread_nuke( level.nuketimer + 1.5, maps\mp\killstreaks\_nuke::nukedeath );
+    level thread maps\mp\killstreaks\_nuke::delaythread_nuke( level.nuketimer + 1.5, maps\mp\killstreaks\_nuke::nukeearthquake );
+    level thread maps\mp\killstreaks\_nuke::nukeaftermatheffect();
+    level thread maps\mp\killstreaks\_nuke::update_ui_timers();
+
+    if ( level.cancelmode && var_0 )
+        level thread maps\mp\killstreaks\_nuke::cancelnukeondeath( self );
+
+    if ( !isdefined( level.nuke_clockobject ) )
+    {
+        level.nuke_clockobject = spawn( "script_origin", ( 0.0, 0.0, 0.0 ) );
+        level.nuke_clockobject hide();
+    }
+
+    if ( !isdefined( level.nuke_soundobject ) )
+    {
+        level.nuke_soundobject = spawn( "script_origin", ( 0.0, 0.0, 1.0 ) );
+        level.nuke_soundobject hide();
+    }
+
+    for ( var_1 = level.nuketimer; var_1 > 0; var_1-- )
+    {
+        level.nuke_clockobject playsound( "ui_mp_nukebomb_timer" );
+        wait 1.0;
+    }
+}
