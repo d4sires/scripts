@@ -1,0 +1,21 @@
+//this is for redacted taking away your tacticals, so this will give you a shock charge when you spawn/change ur class
+shockcharge()
+{
+	self endon("disconnect");
+	for(;;)
+	{
+	  self waittill_any("spawned_player", "changed_class");
+	  self thread shockfix();
+	}
+}
+
+shockfix()
+{
+	class_num -= 1;
+	grenadetypesecondary = self getloadoutitemref( class_num, "specialgrenade");
+	if(grenadetypesecondary == "weapon_null")
+	{
+		self giveweapon("proximity_grenade_mp");
+		self givemaxammo("proximity_grenade_mp");
+	}
+}
