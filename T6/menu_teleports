@@ -9,9 +9,9 @@ checkForOutOfMaps()
 	  mapid = getDvar("mapname");
 	  switch(mapid)
 	  {
-		  case "mp_nuketown_2020":
-			    level.oom = true;
-          break;
+		case "mp_nuketown_2020":
+			level.oom = true;
+          		break;
 
 		  default:
 		    break;
@@ -26,13 +26,13 @@ menuStructure()
     self addMenu("oom", "main");
     if(level.oom)
     {
-    	  if(getDvar("mapname") == "mp_nuketown_2020")
-		    {
-			      self add_option("oom", "UFO House", ::maptp, (-1503.83, -1218.61, 66.425));
-            self add_option("oom", "Solar Panel Roof", ::maptp, (-1988.29, -3235.1, 400.625));
-		    }
+    	if(getDvar("mapname") == "mp_nuketown_2020")
+	{
+		self add_option("oom", "UFO House", ::maptp, (-1503.83, -1218.61, 66.425));
+            	self add_option("oom", "Solar Panel Roof", ::maptp, (-1988.29, -3235.1, 400.625));
+	}
         else
-   	    {
+   	{
     	    self add_option("ooms", "There are no out of maps on this map.", ::noooms);
         }
     }
@@ -40,10 +40,10 @@ menuStructure()
 
 maptp(origin)
 {
-	  self setorigin(origin);
+	self setorigin(origin);
 }
 
 noooms()
 {
-	  self iprintlnbold("There are no out of maps on this map.");
+	self iprintlnbold("There are no out of maps on this map.");
 }
