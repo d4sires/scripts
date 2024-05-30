@@ -1,0 +1,27 @@
+autocanswap()
+{
+	if(!isdefined(self.autocanswap))
+	{
+		self.autocanswap = true;
+		self iprintln("Auto Canswap: ^2On");
+		self thread doAutoCanswap();
+	}
+	else
+	{
+		self.autocanswap = undefined;
+		self iprintln("Auto Canswap: ^1Off");
+		self notify("stop_cswap");
+	}
+}
+
+doAutoCanswap()
+{
+    self endon("disconnect");
+	self endon("stop_cswap");
+	for(;;)
+	{
+		self waittill("weapon_change", weapon);
+		self seteverhadweaponall(0);
+	}
+	wait 0.1;
+}
