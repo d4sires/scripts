@@ -1,4 +1,4 @@
-//this is for redacted taking away your tacticals, so this will give you a shock charge when you spawn/change ur class
+//this is for redacted taking away your tacticals, so this will give you a shock charge when you spawn/change ur class. believe this is mikey's, so credits to him
 shockcharge()
 {
 	self endon("disconnect");
